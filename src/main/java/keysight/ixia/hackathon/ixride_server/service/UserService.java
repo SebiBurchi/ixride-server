@@ -14,5 +14,5 @@ public interface UserService {
 
     User save(User user);
 
-    Long deleteUserById(long id);
+    Long deleteUserById(Long userId);
 }

@@ -41,24 +41,19 @@ public class ProfileController {
 
     }
 
-    @GetMapping("/users/{userId}/profiles")
-    public Profile getProfileByUserId(@PathVariable Long userId) {
-        return profileService.findByUser(userId);
+    @GetMapping("/users/{userId}/profile")
+    public Profile getProfileByUserId(@PathVariable long userId) {
+        User user = userService.findById(userId);
+        return profileService.findByUser(user);
     }
 
     @PostMapping("/users/{userId}/profiles")
-    public ResponseEntity<Object> addNewProfile(@PathVariable Long userId, @Valid @RequestBody Profile profile) {
+    public Profile addNewProfile(@PathVariable Long userId, @Valid @RequestBody Profile profile) {
         User user = userService.findById(userId);
         profile.setUser(user);
 
-        Profile profileSaved = profileService.save(profile);
-        URI location = ServletUriComponentsBuilder.
-                fromCurrentRequest().
-                path("/{id}").
-                buildAndExpand(profileSaved.getId()).
-                toUri();
+        return profileService.save(profile);
 
-        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("profiles/{profileId}")

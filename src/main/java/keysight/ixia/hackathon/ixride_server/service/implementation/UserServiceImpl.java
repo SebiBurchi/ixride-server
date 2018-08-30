@@ -6,6 +6,7 @@ import keysight.ixia.hackathon.ixride_server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -39,8 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long deleteUserById(long id) {
-        return userRepository.deleteUserById(id);
+    @Transactional
+    public Long deleteUserById(Long userId) {
+        return userRepository.deleteUserById(userId);
     }
 
 

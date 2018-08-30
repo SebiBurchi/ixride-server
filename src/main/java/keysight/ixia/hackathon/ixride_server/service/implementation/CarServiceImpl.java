@@ -1,6 +1,7 @@
 package keysight.ixia.hackathon.ixride_server.service.implementation;
 
 import keysight.ixia.hackathon.ixride_server.model.Car;
+import keysight.ixia.hackathon.ixride_server.model.Profile;
 import keysight.ixia.hackathon.ixride_server.repository.CarRepository;
 import keysight.ixia.hackathon.ixride_server.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findByProfile(long profileId) {
-        return carRepository.findByProfile(profileId);
+    public Car findByProfile(Profile profile) {
+        return carRepository.findByProfile(profile);
     }
 
     @Override

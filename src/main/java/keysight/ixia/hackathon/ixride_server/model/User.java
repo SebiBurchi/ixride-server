@@ -4,17 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "User")
 public class User implements Serializable {
 
 
     private static final long serialVersionUID = -7609771741668114770L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID", updatable = false)
     private Long id;
 
@@ -68,32 +67,5 @@ public class User implements Serializable {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(profile, user.profile);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, username, password, profile);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", profile=" + profile +
-                '}';
     }
 }

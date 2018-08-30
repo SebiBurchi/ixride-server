@@ -4,12 +4,11 @@ package keysight.ixia.hackathon.ixride_server.controller;
 import keysight.ixia.hackathon.ixride_server.model.User;
 import keysight.ixia.hackathon.ixride_server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,24 +32,23 @@ public class UserController {
 
 
     @GetMapping("/users/{userId}")
-    public User getUserById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return user;
+    public User getUserById(@PathVariable long userId) {
+        return userService.findById(userId);
 
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Object> addNewUser(@Valid @RequestBody User user) {
+    public User addNewUser(@Valid @RequestBody User user) {
 
-        User savedUser = userService.save(user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
-        return ResponseEntity.created(location).build();
+        return userService.save(user);
+
     }
 
-    @DeleteMapping("/users/{userId}")
-    public long deleteUser(@PathVariable Long id) {
-        return userService.deleteUserById(id);
 
+
+    @DeleteMapping("/users/{userId}")
+    public Long deleteUser(@PathVariable("userId") Long userId) {
+        return userService.deleteUserById(userId);
     }
 
 

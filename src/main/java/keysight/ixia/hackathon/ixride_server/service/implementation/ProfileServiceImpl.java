@@ -1,6 +1,7 @@
 package keysight.ixia.hackathon.ixride_server.service.implementation;
 
 import keysight.ixia.hackathon.ixride_server.model.Profile;
+import keysight.ixia.hackathon.ixride_server.model.User;
 import keysight.ixia.hackathon.ixride_server.repository.ProfileRepository;
 import keysight.ixia.hackathon.ixride_server.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile findByUser(long userId) {
-        return profileRepository.findByUser(userId);
+    public Profile findByUser(User user) {
+        return profileRepository.findByUser(user);
     }
 
     @Override

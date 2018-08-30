@@ -1,5 +1,7 @@
 package keysight.ixia.hackathon.ixride_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,9 +24,11 @@ public class Car implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PROFILE_ID", nullable = false)
+    @JsonIgnore
     private Profile profile;
 
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Route> routes;
 
 

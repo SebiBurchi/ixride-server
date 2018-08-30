@@ -38,23 +38,18 @@ public class CarController {
         return carService.findById(id);
     }
 
-    @GetMapping("/profiles/{profileId}/cars")
-    public Car getCarByProfileId(@PathVariable Long profileId) {
-        return carService.findByProfile(profileId);
+    @GetMapping("/profiles/{profileId}/car")
+    public Car getCarByProfile(@PathVariable long profileId) {
+        Profile profile = profileService.findById(profileId);
+        return carService.findByProfile(profile);
     }
 
     @PostMapping("/profiles/{profileId}/cars")
-    public ResponseEntity<Object> addNewCar(@PathVariable Long profileId, @Valid @RequestBody Car car) {
+    public Car addNewCar(@PathVariable Long profileId, @Valid @RequestBody Car car) {
         Profile profile = profileService.findById(profileId);
         car.setProfile(profile);
 
-        Car savedCar = carService.save(car);
-        URI location = ServletUriComponentsBuilder.
-                fromCurrentRequest().
-                path("/{id}").
-                buildAndExpand(savedCar.getId()).
-                toUri();
+        return carService.save(car);
 
-        return ResponseEntity.created(location).build();
     }
 }
