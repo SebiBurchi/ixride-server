@@ -55,7 +55,8 @@ class Solution implements Comparable<Solution> {
 
 	public void printSolution() {
 		System.out.println("Max Deviation " + getMaxAcceptedDeviationPerVehicle() + " Total cost " + getCost()
-				+ " Total deviation " + getDeviation() + " with no ride " + getNrOfPassengersWithoutAride());
+				+ " Total deviation " + getDeviation() + " minimum cost " + getMinimumCost() + " with no ride "
+				+ getNrOfPassengersWithoutAride());
 	}
 
 	public void drawRoutes(String fileName) {

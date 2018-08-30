@@ -20,6 +20,7 @@ public class Vehicle implements Cloneable {
 	private int id;
 	private GeoLocation currentLocation;
 	private GeoLocation originLocation;
+	private int totalCapacity;
 	private int remainingCapacity;
 	private List<GeoLocation> route;
 	private List<Passenger> passengers;
@@ -27,7 +28,9 @@ public class Vehicle implements Cloneable {
 
 	public Vehicle(int id, GeoLocation origin, int capacity) {
 		this.id = id;
-		this.remainingCapacity = capacity;
+		this.totalCapacity = capacity;
+		// total minus the driver
+		this.remainingCapacity = capacity - 1;
 		this.currentLocation = origin;
 		this.originLocation = new GeoLocation(origin.getLatitude(), origin.getLongitude());
 		this.route = new ArrayList<GeoLocation>();
@@ -41,7 +44,7 @@ public class Vehicle implements Cloneable {
 	}
 
 	public boolean hasSeatsAvalable() {
-		return route.size() <= remainingCapacity;
+		return remainingCapacity > 0;
 	}
 
 	public int getCapacity() {

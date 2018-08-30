@@ -9,8 +9,9 @@ public class GreedySearch {
 
 	private static final int MAX_SEARCH_ITERATIONS = 1000;
 	private static final int TOTAL_DEVATION_WEIGHT = 5;
-	private static final int PASSENGER_LEFT_BEHIND_WEIGHT = 100;
-
+	private static final int PASSENGER_LEFT_BEHIND_WEIGHT = 2;
+	private static final double DESTINATION_LONGITUDE = 26.094533;
+	private static final double DESTINATION_LATITUDE = 44.438959;
 	private GeoLocation destination;
 	private List<Passenger> passengers;
 	private List<Vehicle> vehicles;
@@ -24,15 +25,15 @@ public class GreedySearch {
 	}
 
 	public static void main(String[] args) {
-		GreedySearch problem = new GreedySearch(new GeoLocation(44.5, 25.6));
+		GreedySearch problem = new GreedySearch(new GeoLocation(DESTINATION_LATITUDE, DESTINATION_LONGITUDE));
 		problem.getPassengersAndVehicles();
 		problem.findSolutions();
 	}
 
 	private void getPassengersAndVehicles() {
 		Random ran = new Random();
-		int nrOfPassengers = 200;
-		int nrOfVehicles = 30;
+		int nrOfPassengers = 2000;
+		int nrOfVehicles = 300;
 
 		double latitudes[] = ran.doubles(nrOfPassengers, 0, 90).toArray();
 		double longitudes[] = ran.doubles(nrOfPassengers, 0, 50).toArray();
@@ -45,7 +46,7 @@ public class GreedySearch {
 		longitudes = ran.doubles(nrOfPassengers, 0, 50).toArray();
 
 		for (int i = 0; i < nrOfVehicles; i++) {
-			vehicles.add(new Vehicle(i, new GeoLocation(latitudes[i], longitudes[i]), 4));
+			vehicles.add(new Vehicle(i, new GeoLocation(latitudes[i], longitudes[i]), 5));
 		}
 	}
 
@@ -66,7 +67,7 @@ public class GreedySearch {
 			// greedySearchNearestToCurrentPosition(s);
 			// s.printSolution();
 			greedySearchSmallestDeviation(s);
-			s.printSolution();
+			//s.printSolution();
 			solutions.add(s);
 		}
 
@@ -80,23 +81,6 @@ public class GreedySearch {
 		bestSolution.printSolution();
 		bestSolution.drawRoutes("greedy");
 
-	}
-
-	private void greedySearchNearestToCurrentPosition(Solution s) {
-		for (Vehicle v : s.getVehicless()) {
-			while (v.hasSeatsAvalable()) {
-				Passenger nearestPassenger = v.getNearestPassenger(s.getPassengersWithoutAride());
-				if (nearestPassenger != null) {
-					v.addPassenger(nearestPassenger);
-					s.getPassengersWithoutAride().remove(nearestPassenger);
-				} else {
-					// no more passengers
-					break;
-				}
-			}
-			// go to final destination
-			v.addDestination(destination);
-		}
 	}
 
 	private void greedySearchSmallestDeviation(Solution s) {
