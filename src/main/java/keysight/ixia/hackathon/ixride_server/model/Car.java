@@ -22,7 +22,7 @@ public class Car implements Serializable {
     @Column(name = "SEATS_NUMBER", length = 2)
     private int seatsNumber;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "PROFILE_ID", nullable = false)
     @JsonIgnore
     private Profile profile;
