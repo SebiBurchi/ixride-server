@@ -98,14 +98,4 @@ public class Car implements Serializable {
         return Objects.hash(id, licensePlate, seatsNumber, profile, routes);
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", licensePlate='" + licensePlate + '\'' +
-                ", seatsNumber=" + seatsNumber +
-                ", profile=" + profile +
-                ", routes=" + routes +
-                '}';
-    }
 }
