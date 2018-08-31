@@ -9,14 +9,14 @@ package keysight.ixia.hackathon.ixride_server.greedy;
  */
 public class Passenger extends GeoLocation implements Cloneable {
 
-	private int id;
+	private long id;
 
-	public Passenger(int id, double latitude, double longitude) {
+	public Passenger(long id, double latitude, double longitude) {
 		super(latitude, longitude);
 		this.id = id;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

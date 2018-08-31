@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-class Solution implements Comparable<Solution> {
+public class Solution implements Comparable<Solution> {
 
 	private GeoLocation destination;
 	private List<Vehicle> vehicless = new ArrayList<Vehicle>();
@@ -54,9 +54,10 @@ class Solution implements Comparable<Solution> {
 	}
 
 	public void printSolution() {
-		System.out.println("Max Deviation " + getMaxAcceptedDeviationPerVehicle() + " Total cost " + getCost()
+		//this.vehicless.forEach(v -> System.out.println(v.toString()));
+		System.out.println("Max Accepted Deviation " + getMaxAcceptedDeviationPerVehicle() + " Total cost " + getCost()
 				+ " Total deviation " + getDeviation() + " minimum cost " + getMinimumCost() + " with no ride "
-				+ getNrOfPassengersWithoutAride());
+				+ getNrOfPassengersWithoutAride());		
 	}
 
 	public void drawRoutes(String fileName) {

@@ -12,37 +12,41 @@ import java.util.List;
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-    ProfileRepository profileRepository;
+	ProfileRepository profileRepository;
 
-    @Autowired
-    public void setProfileRepository(ProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
-    }
+	@Autowired
+	public void setProfileRepository(ProfileRepository profileRepository) {
+		this.profileRepository = profileRepository;
+	}
 
-    @Override
-    public Profile findById(long id) {
-        return profileRepository.findById(id);
-    }
+	@Override
+	public Profile findById(long id) {
+		return profileRepository.findById(id);
+	}
 
-    @Override
-    public Profile findByUser(User user) {
-        return profileRepository.findByUser(user);
-    }
+	@Override
+	public Profile findByUser(User user) {
+		return profileRepository.findByUser(user);
+	}
 
-    @Override
-    public List<Profile> findAll() {
-        return profileRepository.findAll();
-    }
+	@Override
+	public List<Profile> findAll() {
+		return profileRepository.findAll();
+	}
 
-    @Override
-    public Profile save(Profile profile) {
-        return profileRepository.save(profile);
-    }
+	@Override
+	public Profile save(Profile profile) {
+		return profileRepository.save(profile);
+	}
 
-    @Override
-    public Long deleteProfileById(long id) {
-        return profileRepository.deleteProfileById(id);
-    }
+	@Override
+	public Long deleteProfileById(long id) {
+		return profileRepository.deleteProfileById(id);
+	}
 
+	@Override
+	public List<Profile> findAllByIsDriver(boolean isDriver) {
+		return profileRepository.findAllByIsDriver(isDriver);
+	}
 
 }

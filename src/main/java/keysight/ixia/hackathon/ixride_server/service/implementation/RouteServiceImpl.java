@@ -1,5 +1,7 @@
 package keysight.ixia.hackathon.ixride_server.service.implementation;
 
+import keysight.ixia.hackathon.ixride_server.model.Car;
+import keysight.ixia.hackathon.ixride_server.model.Profile;
 import keysight.ixia.hackathon.ixride_server.model.Route;
 import keysight.ixia.hackathon.ixride_server.repository.RouteRepository;
 import keysight.ixia.hackathon.ixride_server.service.RouteService;
@@ -20,13 +22,13 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Route findByCar(Long carId) {
-        return routeRepository.findByCar(carId);
+    public List<Route> findByCar(Car car) {
+        return routeRepository.findByCar(car);
     }
 
     @Override
-    public Route findByProfile(Long profileId) {
-        return routeRepository.findByProfile(profileId);
+    public List<Route> findByProfile(Profile profile) {
+        return routeRepository.findByProfile(profile);
     }
 
     @Override

@@ -2,6 +2,9 @@ package keysight.ixia.hackathon.ixride_server.model;
 
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -25,10 +28,12 @@ public class Route implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CAR_ID", updatable = false)
+    @JsonIgnore
     private Car car;
 
     @ManyToOne
     @JoinColumn(name = "PROFILE_ID", updatable = false)
+    @JsonIgnore
     private Profile profile;
 
     public Route() {

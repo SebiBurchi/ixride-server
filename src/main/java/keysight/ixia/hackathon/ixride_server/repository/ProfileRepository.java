@@ -20,4 +20,5 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     Long deleteProfileById(long id);
 
+    List<Profile> findAllByIsDriver(boolean isDriver);
 }

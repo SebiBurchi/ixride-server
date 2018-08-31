@@ -16,4 +16,6 @@ public interface ProfileService {
     Profile save(Profile profile);
 
     Long deleteProfileById(long id);
+    
+    List<Profile> findAllByIsDriver(boolean isDriver);
 }

@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
  *
  */
 public class Vehicle implements Cloneable {
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	private int id;
+	private long id;
 	private GeoLocation currentLocation;
 	private GeoLocation originLocation;
 	private int totalCapacity;
@@ -26,7 +26,7 @@ public class Vehicle implements Cloneable {
 	private List<Passenger> passengers;
 	private double totalCost;
 
-	public Vehicle(int id, GeoLocation origin, int capacity) {
+	public Vehicle(long id, GeoLocation origin, int capacity) {
 		this.id = id;
 		this.totalCapacity = capacity;
 		// total minus the driver
@@ -37,6 +37,10 @@ public class Vehicle implements Cloneable {
 		this.route.add(origin);
 		this.passengers = new ArrayList<Passenger>();
 		this.totalCost = 0;
+	}
+
+	public List<Passenger> getPassengers() {
+		return passengers;
 	}
 
 	public GeoLocation getOriginLocation() {
@@ -61,12 +65,12 @@ public class Vehicle implements Cloneable {
 		return route;
 	}
 
-	public void addPassenger(Passenger location) {
+	public void addPassenger(Passenger passenger) {
 		if (!hasSeatsAvalable()) {
 			throw new RuntimeException("No seats available");
 		}
-		this.addDestination(location);
-		this.passengers.add(location);
+		this.addDestination(passenger);
+		this.passengers.add(passenger);
 		this.remainingCapacity--;
 	}
 
