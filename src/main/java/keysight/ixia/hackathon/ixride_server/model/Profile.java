@@ -134,18 +134,4 @@ public class Profile implements Serializable {
         return Objects.hash(id, name, phone, addressLongitude, addressLatitude, isDriver, user, car, routes);
     }
 
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", addressLongitude=" + addressLongitude +
-                ", addressLatitude=" + addressLatitude +
-                ", isDriver=" + isDriver +
-                ", user=" + user +
-                ", car=" + car +
-                ", routes=" + routes +
-                '}';
-    }
 }

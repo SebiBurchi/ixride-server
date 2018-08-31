@@ -13,39 +13,55 @@ import java.util.List;
 @RestController
 public class CarController {
 
-	private final CarService carService;
-	private final ProfileService profileService;
 
-	@Autowired
-	public CarController(CarService carService, ProfileService profileService) {
-		this.carService = carService;
-		this.profileService = profileService;
-	}
+    private final CarService carService;
+    private final ProfileService profileService;
 
-	@GetMapping("/cars")
-	public List<Car> getAllCars() {
-		List<Car> cars = new ArrayList<>();
-		carService.findAll().forEach(cars::add);
-		return cars;
-	}
+    @Autowired
+    public CarController(CarService carService, ProfileService profileService) {
+        this.carService = carService;
+        this.profileService = profileService;
+    }
 
-	@GetMapping("/cars/{carId}")
-	public Car getCarById(@PathVariable Long id) {
-		return carService.findById(id);
-	}
+    @GetMapping("/cars")
+    public List<Car> getAllCars() {
+        List<Car> cars = new ArrayList<>();
+        carService.findAll().forEach(cars::add);
+        return cars;
+    }
 
-	@GetMapping("/profiles/{profileId}/car")
-	public Car getCarByProfile(@PathVariable long profileId) {
-		Profile profile = profileService.findById(profileId);
-		return carService.findByProfile(profile);
-	}
+    @GetMapping("/cars/{carId}")
+    public Car getCarById(@PathVariable Long id) {
+        return carService.findById(id);
+    }
 
-	@PostMapping("/profiles/{profileId}/cars")
-	public Car addNewCar(@PathVariable Long profileId, @Valid @RequestBody Car car) {
-		Profile profile = profileService.findById(profileId);
-		car.setProfile(profile);
+    @GetMapping("/profiles/{profileId}/car")
+    public Car getCarByProfile(@PathVariable long profileId) {
+        Profile profile = profileService.findById(profileId);
+        return carService.findByProfile(profile);
+    }
 
-		return carService.save(car);
+    @PostMapping("/profiles/{profileId}/cars")
+    public Car addNewCar(@PathVariable Long profileId, @Valid @RequestBody Car car) {
+        Profile profile = profileService.findById(profileId);
+        car.setProfile(profile);
 
-	}
+        return carService.save(car);
+
+    }
+
+    @PutMapping("/profiles/{profileId}/car")
+    public Car updateCar(@Valid @RequestBody Car car, @PathVariable Long profileId) {
+        Profile profile = profileService.findById(profileId);
+        Car carToUpdate = carService.findByProfile(profile);
+        if (carToUpdate != null) {
+            carToUpdate.setProfile(profile);
+            carToUpdate.setLicensePlate(car.getLicensePlate());
+            carToUpdate.setSeatsNumber(car.getSeatsNumber());
+        }
+
+        return carService.save(carToUpdate);
+
+    }
+
 }

@@ -61,18 +61,20 @@ public class ProfileController {
         return profileService.deleteProfileById(id);
     }
 
-    @PostMapping("/update-profile/{profileId}")
-    public void updateProfile(@PathVariable Long profileId, @RequestBody Profile profile) {
+    @PutMapping("/users/{userId}/profile")
+    public Profile updateProfile(@RequestBody Profile profile, @PathVariable Long userId) {
+        User user = userService.findById(userId);
+        Profile profileToUpdate = profileService.findByUser(user);
+        if (profileToUpdate != null) {
+            profileToUpdate.setAddressLatitude(profile.getAddressLatitude());
+            profileToUpdate.setAddressLongitude(profile.getAddressLongitude());
+            profileToUpdate.setUser(user);
+            profileToUpdate.setDriver(profile.isDriver());
+            profileToUpdate.setName(profile.getName());
+            profileToUpdate.setPhone(profile.getPhone());
+        }
 
-        Profile profileToUpdate = profileService.findById(profileId);
-        profileToUpdate.setAddressLatitude(profile.getAddressLatitude());
-        profileToUpdate.setAddressLongitude(profile.getAddressLongitude());
-        profileToUpdate.setUser(profile.getUser());
-        profileToUpdate.setDriver(profile.isDriver());
-        profileToUpdate.setName(profile.getName());
-        profileToUpdate.setPhone(profile.getPhone());
-
-        profileService.save(profileToUpdate);
+        return profileService.save(profileToUpdate);
 
     }
 

@@ -44,6 +44,16 @@ public class UserController {
 
     }
 
+    @PutMapping("/users/{userId}")
+    public User updateUser(@Valid @RequestBody User user, @PathVariable Long userId) {
+        User userToUpdate = userService.findById(userId);
+        if (userToUpdate != null) {
+            userToUpdate.setUsername(user.getUsername());
+            userToUpdate.setPassword(user.getPassword());
+        }
+
+        return userService.save(userToUpdate);
+    }
 
 
     @DeleteMapping("/users/{userId}")
