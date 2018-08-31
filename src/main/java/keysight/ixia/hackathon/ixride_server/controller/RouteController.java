@@ -65,9 +65,10 @@ public class RouteController {
 			// available index
 			RouteWayPoint destination = new RouteWayPoint();
 			destination.setLatitude(GreedySearch.DESTINATION_LATITUDE);
-			destination.setLatitude(GreedySearch.DESTINATION_LONGITUDE);
+			destination.setLongitude(GreedySearch.DESTINATION_LONGITUDE);
 			destination.setIndex(navigationRoutePoints.stream().mapToLong(wp -> wp.getIndex()).max().getAsLong() + 1);
 			destination.setProfileId(Long.MAX_VALUE);
+			navigationRoutePoints.add(destination);
 			result.setCar(car);
 			result.setRoute(navigationRoutePoints);
 			result.setDriver(car.getProfile());
