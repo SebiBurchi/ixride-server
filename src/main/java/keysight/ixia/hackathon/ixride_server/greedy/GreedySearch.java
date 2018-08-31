@@ -10,8 +10,8 @@ public class GreedySearch {
 	private static final int MAX_SEARCH_ITERATIONS = 1000;
 	private static final int TOTAL_DEVATION_WEIGHT = 5;
 	private static final int PASSENGER_LEFT_BEHIND_WEIGHT = 2;
-	private static final double DESTINATION_LONGITUDE = 26.094533;
-	private static final double DESTINATION_LATITUDE = 44.438959;
+	public static final double DESTINATION_LONGITUDE = 26.094533;
+	public static final double DESTINATION_LATITUDE = 44.438959;
 	
 	public static final double FAKE_LAT_START = 44.323752;
 	public static final double FAKE_LAT_END = 44.547617;

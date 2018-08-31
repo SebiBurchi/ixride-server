@@ -40,7 +40,7 @@ public class GreedySolutionController {
 	}
 
 	@GetMapping("/greedypopulate")
-	public ResponseEntity<Object> performSearch() {
+	public ResponseEntity<Object> populateWithFakeData() {
 
 		Random ran = new Random();
 		int nrOfPassengers = 400;
@@ -54,7 +54,8 @@ public class GreedySolutionController {
 		for (int i = 0; i < nrOfPassengers; i++) {
 			User u = new User("passenger" + i, "passwroddd");
 			Profile p = new Profile("passenger myname p" + i, "001234" + i, longitudes[i], latitudes[i], false);
-			p.setUser(userService.save(u));
+			User savedUser = userService.save(u);			
+			p.setUser(savedUser);
 			profileService.save(p);
 		}
 
@@ -77,9 +78,7 @@ public class GreedySolutionController {
 	}
 
 	@GetMapping("/greedy")
-	public ResponseEntity<Object> populateWithFakeData() {
-		final double DESTINATION_LONGITUDE = 26.094533;
-		final double DESTINATION_LATITUDE = 44.438959;
+	public ResponseEntity<Object> performSearch() {		
 
 		List<Profile> passengerProfiles = profileService.findAllByIsDriver(false);
 		List<Passenger> allPassengers = passengerProfiles.stream().map(
@@ -93,7 +92,7 @@ public class GreedySolutionController {
 						carService.findByProfile(profile).getSeatsNumber()))
 				.collect(Collectors.toList());
 
-		GreedySearch problem = new GreedySearch(new GeoLocation(DESTINATION_LATITUDE, DESTINATION_LONGITUDE));
+		GreedySearch problem = new GreedySearch(new GeoLocation(GreedySearch.DESTINATION_LATITUDE, GreedySearch.DESTINATION_LONGITUDE));
 		problem.setPassengers(allPassengers);
 		problem.setVehicles(allVehicles);
 		problem.findSolutions();
@@ -108,11 +107,7 @@ public class GreedySolutionController {
 				Route r = new Route((long) i + 1, timestamp, car,
 						profileService.findById(v.getPassengers().get(i).getId()));
 				routeService.save(r);
-			}
-			// Route destination = new Route((long) v.getPassengers().size() + 1, timestamp,
-			// car, new Profile("destination", "0000", DESTINATION_LONGITUDE,
-			// DESTINATION_LATITUDE, false));
-			// routeService.save(origin);
+			}		
 		}
 
 		return ResponseEntity.ok().build();

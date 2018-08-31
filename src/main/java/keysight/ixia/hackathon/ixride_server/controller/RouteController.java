@@ -1,8 +1,12 @@
 package keysight.ixia.hackathon.ixride_server.controller;
 
+import keysight.ixia.hackathon.ixride_server.auth.AuthResponse;
+import keysight.ixia.hackathon.ixride_server.greedy.GreedySearch;
 import keysight.ixia.hackathon.ixride_server.model.Car;
+import keysight.ixia.hackathon.ixride_server.model.NavigationRoute;
 import keysight.ixia.hackathon.ixride_server.model.Profile;
 import keysight.ixia.hackathon.ixride_server.model.Route;
+import keysight.ixia.hackathon.ixride_server.model.RouteWayPoint;
 import keysight.ixia.hackathon.ixride_server.service.CarService;
 import keysight.ixia.hackathon.ixride_server.service.ProfileService;
 import keysight.ixia.hackathon.ixride_server.service.RouteService;
@@ -37,10 +41,10 @@ public class RouteController {
 	}
 
 	@GetMapping("/profiles/{profileId}/routes")
-	public List<Route> getRoutesById(@PathVariable Long profileId) {
-		Profile p = profileService.findById(profileId);
-		List<Route> waypointsForCar = null;
-		List<Route> routeEntriesForProfile = routeService.findByProfile(p);
+	public NavigationRoute getRoutesById(@PathVariable Long profileId) {
+
+		NavigationRoute result = new NavigationRoute();
+		List<Route> routeEntriesForProfile = routeService.findByProfile(profileService.findById(profileId));
 		if (routeEntriesForProfile.isEmpty()) {
 			// no routes
 		} else {
@@ -51,12 +55,33 @@ public class RouteController {
 						"Profile " + profileId + " has " + routeEntriesForProfile.size() + "entries in Routes");
 			}
 			Route routeEntryForProfile = routeEntriesForProfile.get(0);
-			waypointsForCar = routeService.findByCar(routeEntryForProfile.getCar());
-			List<Profile> profiles = waypointsForCar.stream()
-					.map(wp -> profileService.findById(wp.getProfile().getId())).collect(Collectors.toList());
+			Car car = routeEntryForProfile.getCar();
 
+			List<Route> waypointsForCar = routeService.findByCar(car);
+			List<RouteWayPoint> navigationRoutePoints = waypointsForCar.stream()
+					.map(cwp -> convertRouteToRouteEndPoint(cwp)).collect(Collectors.toList());
+
+			// add the final destination to the route result with profileid Long.MAX_VALUE, and the next
+			// available index
+			RouteWayPoint destination = new RouteWayPoint();
+			destination.setLatitude(GreedySearch.DESTINATION_LATITUDE);
+			destination.setLatitude(GreedySearch.DESTINATION_LONGITUDE);
+			destination.setIndex(navigationRoutePoints.stream().mapToLong(wp -> wp.getIndex()).max().getAsLong() + 1);
+			destination.setProfileId(Long.MAX_VALUE);
+			result.setCar(car);
+			result.setRoute(navigationRoutePoints);
+			result.setDriver(car.getProfile());
 		}
-		return waypointsForCar;
+		return result;
+	}
+
+	private RouteWayPoint convertRouteToRouteEndPoint(Route cwp) {
+		RouteWayPoint rep = new RouteWayPoint();
+		rep.setIndex(cwp.getOrderNumber());
+		rep.setLatitude(cwp.getProfile().getAddressLatitude());
+		rep.setLongitude(cwp.getProfile().getAddressLongitude());
+		rep.setProfileId(cwp.getProfile().getId());
+		return rep;
 	}
 
 	@PostMapping("/profiles/{profileId}/cars/{carId}/routes")

@@ -45,7 +45,7 @@ public class Profile implements Serializable {
     @JsonIgnore
     private Collection<Route> routes;
 
-    Profile() {
+    public Profile() {
     }
 
     public Profile(String name, String phone, double addressLongitude, double addressLatitude, boolean isDriver) {
