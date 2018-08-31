@@ -12,14 +12,12 @@ public class GreedySearch {
 	private static final int PASSENGER_LEFT_BEHIND_WEIGHT = 2;
 	public static final double DESTINATION_LONGITUDE = 26.094533;
 	public static final double DESTINATION_LATITUDE = 44.438959;
-	
+
 	public static final double FAKE_LAT_START = 44.323752;
 	public static final double FAKE_LAT_END = 44.547617;
 	public static final double FAKE_LONG_START = 25.938429;
 	public static final double FAKE_LONG_END = 26.275744;
-	
-			
-	
+
 	private GeoLocation destination;
 	private List<Passenger> passengers;
 	private List<Vehicle> vehicles;
@@ -68,7 +66,7 @@ public class GreedySearch {
 		int nrOfVehicles = 100;
 
 		double latitudes[] = ran.doubles(nrOfPassengers, FAKE_LAT_START, FAKE_LAT_END).toArray();
-		double longitudes[] = ran.doubles(nrOfPassengers, FAKE_LONG_START, FAKE_LONG_END).toArray();
+		double longitudes[] = ran.doubles(nrOfPassengers, FAKE_LONG_START, FAKE_LONG_END).toArray();		
 
 		for (int i = 0; i < nrOfPassengers; i++) {
 			passengers.add(new Passenger(i, latitudes[i], longitudes[i]));
@@ -99,14 +97,14 @@ public class GreedySearch {
 			// greedySearchNearestToCurrentPosition(s);
 			// s.printSolution();
 			greedySearchSmallestDeviation(s);
-			//s.printSolution();
+			// s.printSolution();
 			solutions.add(s);
 		}
 
 		Solution bestSolution = getBestSolution();
 
 		bestSolution.printSolution();
-		bestSolution.drawRoutes("greedy");
+		bestSolution.drawRoutes("greedy", FAKE_LONG_START, FAKE_LAT_START, FAKE_LONG_END, FAKE_LAT_END);
 
 	}
 

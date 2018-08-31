@@ -54,71 +54,41 @@ public class Solution implements Comparable<Solution> {
 	}
 
 	public void printSolution() {
-		//this.vehicless.forEach(v -> System.out.println(v.toString()));
+		this.vehicless.forEach(v -> System.out.println(v.toString()));
 		System.out.println("Max Accepted Deviation " + getMaxAcceptedDeviationPerVehicle() + " Total cost " + getCost()
 				+ " Total deviation " + getDeviation() + " minimum cost " + getMinimumCost() + " with no ride "
-				+ getNrOfPassengersWithoutAride());		
+				+ getNrOfPassengersWithoutAride());
 	}
 
-	public void drawRoutes(String fileName) {
+	public void drawRoutes(String fileName, double x0, double y0, double x1, double y1) {
 
-		int VRP_Y = 800;
-		int VRP_INFO = 200;
-		int X_GAP = 600;
-		int margin = 30;
-		int marginNode = 1;
+		int imageDimension = 800;
 
-		int XXX = VRP_INFO + X_GAP;
-		int YYY = VRP_Y;
+		double pixelsForDistanceX = (double) imageDimension / (Math.abs(x1 - x0));
+		double pixelsForDistanceY = (double) imageDimension / (Math.abs(y1 - y0));
 
-		BufferedImage output = new BufferedImage(XXX, YYY, BufferedImage.TYPE_INT_RGB);
+		BufferedImage output = new BufferedImage(imageDimension, imageDimension, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = output.createGraphics();
 		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, XXX, YYY);
+		g.fillRect(0, 0, imageDimension, imageDimension);
 		g.setColor(Color.BLACK);
-
-		double minX = 0;
-		double maxX = 100;
-		double minY = 0;
-		double maxY = 100;
-
-		int mX = XXX - 2 * margin;
-		int mY = VRP_Y - 2 * margin;
-
-		int A, B;
-		if ((maxX - minX) > (maxY - minY)) {
-			A = mX;
-			B = (int) ((double) (A) * (maxY - minY) / (maxX - minX));
-			if (B > mY) {
-				B = mY;
-				A = (int) ((double) (B) * (maxX - minX) / (maxY - minY));
-			}
-		} else {
-			B = mY;
-			A = (int) ((double) (B) * (maxX - minX) / (maxY - minY));
-			if (A > mX) {
-				A = mX;
-				B = (int) ((double) (A) * (maxY - minY) / (maxX - minX));
-			}
-		}
 
 		// Draw Route
 		int nrOfVehicles = this.getVehicless().size();
 		for (int i = 0; i < nrOfVehicles; i++) {
-			for (int j = 1; j < this.getVehicless().get(i).getRoute().size(); j++) {
-				GeoLocation n = this.getVehicless().get(i).getRoute().get(j - 1);
 
-				int ii1 = (int) ((double) (A) * ((n.getLatitude() - minX) / (maxX - minX) - 0.5) + (double) mX / 2)
-						+ margin;
-				int jj1 = (int) ((double) (B) * (0.5 - (n.getLongitude() - minY) / (maxY - minY)) + (double) mY / 2)
-						+ margin;
+			Vehicle vehicle = this.getVehicless().get(i);
+			List<GeoLocation> route = vehicle.getRoute();
 
-				n = this.getVehicless().get(i).getRoute().get(j);
+			for (int j = 1; j < route.size(); j++) {
 
-				int ii2 = (int) ((double) (A) * ((n.getLatitude() - minX) / (maxX - minX) - 0.5) + (double) mX / 2)
-						+ margin;
-				int jj2 = (int) ((double) (B) * (0.5 - (n.getLongitude() - minY) / (maxY - minY)) + (double) mY / 2)
-						+ margin;
+				GeoLocation wayPoint = route.get(j - 1);
+				int ii1 = (int) ((wayPoint.getLongitude() - x0) * pixelsForDistanceX);
+				int jj1 = (int) ((wayPoint.getLatitude() - y0) * pixelsForDistanceY);
+
+				wayPoint = route.get(j);
+				int ii2 = (int) ((wayPoint.getLongitude() - x0) * pixelsForDistanceX);
+				int jj2 = (int) ((wayPoint.getLatitude() - y0) * pixelsForDistanceY);
 
 				g.drawLine(ii1, jj1, ii2, jj2);
 			}
