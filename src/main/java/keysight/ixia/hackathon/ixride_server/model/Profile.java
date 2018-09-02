@@ -41,7 +41,7 @@ public class Profile implements Serializable {
     @JsonIgnore
     private Car car;
 
-    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Route> routes;
 
