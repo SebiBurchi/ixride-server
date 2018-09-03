@@ -104,6 +104,7 @@ public class GreedySearch {
 		Solution bestSolution = getBestSolution();
 
 		bestSolution.printSolution();
+
 		bestSolution.drawRoutes("greedy", FAKE_LONG_START, FAKE_LAT_START, FAKE_LONG_END, FAKE_LAT_END);
 
 	}
