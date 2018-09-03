@@ -14,40 +14,45 @@ import java.util.List;
 @Service
 public class RouteServiceImpl implements RouteService {
 
-    RouteRepository routeRepository;
+	RouteRepository routeRepository;
 
-    @Autowired
-    public void setRouteRepository(RouteRepository routeRepository) {
-        this.routeRepository = routeRepository;
-    }
+	@Autowired
+	public void setRouteRepository(RouteRepository routeRepository) {
+		this.routeRepository = routeRepository;
+	}
 
-    @Override
-    public List<Route> findByCar(Car car) {
-        return routeRepository.findByCar(car);
-    }
+	@Override
+	public List<Route> findByCar(Car car) {
+		return routeRepository.findByCar(car);
+	}
 
-    @Override
-    public List<Route> findByProfile(Profile profile) {
-        return routeRepository.findByProfile(profile);
-    }
+	@Override
+	public List<Route> findByProfile(Profile profile) {
+		return routeRepository.findByProfile(profile);
+	}
 
-    @Override
-    public List<Route> findByCarAndProfile(Long cardId, Long profileId) {
-        return routeRepository.findByCarAndProfile(cardId, profileId);
-    }
+	@Override
+	public List<Route> findByCarAndProfile(Long cardId, Long profileId) {
+		return routeRepository.findByCarAndProfile(cardId, profileId);
+	}
 
-    @Override
-    public List<Route> findAll() {
-        return routeRepository.findAll();
-    }
+	@Override
+	public List<Route> findAll() {
+		return routeRepository.findAll();
+	}
 
-    @Override
-    public Route findByTimestamp(Date timestamp) {
-        return routeRepository.findByTimestamp(timestamp);
-    }
+	@Override
+	public Route findByTimestamp(Date timestamp) {
+		return routeRepository.findByTimestamp(timestamp);
+	}
 
-    @Override
-    public Route save(Route route) {
-        return routeRepository.save(route);
-    }
+	@Override
+	public Route save(Route route) {
+		return routeRepository.save(route);
+	}
+
+	@Override
+	public void deleteAll() {
+		routeRepository.deleteAll();
+	}
 }

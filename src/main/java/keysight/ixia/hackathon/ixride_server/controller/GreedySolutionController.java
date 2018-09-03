@@ -80,6 +80,7 @@ public class GreedySolutionController {
 	@GetMapping("/greedy")
 	public ResponseEntity<Object> performSearch() {		
 
+		routeService.deleteAll();
 		List<Profile> passengerProfiles = profileService.findAllByIsDriver(false);
 		List<Passenger> allPassengers = passengerProfiles.stream().map(
 				profile -> new Passenger(profile.getId(), profile.getAddressLatitude(), profile.getAddressLongitude()))

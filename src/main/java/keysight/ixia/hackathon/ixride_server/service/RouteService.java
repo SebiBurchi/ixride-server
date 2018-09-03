@@ -20,4 +20,6 @@ public interface RouteService {
     Route findByTimestamp(Date timestamp);
 
     Route save(Route route);
+    
+    void deleteAll();
 }

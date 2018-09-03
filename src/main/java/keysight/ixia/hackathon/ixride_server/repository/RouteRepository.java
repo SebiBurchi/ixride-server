@@ -22,5 +22,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
 
     Route save(Route route);
 
-
+    void deleteAll();
 }
